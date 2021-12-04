@@ -7,6 +7,28 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func TestMoveWithAim(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []string
+		expected int
+	}{
+		{
+			name:     "test 1",
+			input:    []string{"forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"},
+			expected: 900,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(strings.Join(tc.input, ", "), func(t *testing.T) {
+			result, err := moveWithAim(tc.input)
+			require.NoError(t, err)
+			require.Equal(t, tc.expected, result)
+		})
+	}
+}
+
 func TestMove_Positive(t *testing.T) {
 	tests := []struct {
 		name     string
