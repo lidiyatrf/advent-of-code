@@ -9,14 +9,25 @@ import (
 const boardSize = 5
 
 type Board struct {
-	board  [boardSize][boardSize]int
+	values [boardSize][boardSize]int
 	marked [boardSize][boardSize]bool
-
-	stepsToWin int
 }
 
-func (b *Board) SetRow(rowNum int, str string) error {
-	nums := strings.FieldsFunc(str, splitRow)
+func newBoard(rows []string) (*Board, error) {
+	b := Board{}
+	for j := 0; j < boardSize; j++ {
+		err := b.appendRow(j, rows[j])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return &b, nil
+}
+
+func (b *Board) appendRow(row int, str string) error {
+	nums := strings.FieldsFunc(str, func(c rune) bool {
+		return c == ' '
+	})
 	if len(nums) != boardSize {
 		return fmt.Errorf("incorrect amount of numbers in row")
 	}
@@ -25,15 +36,41 @@ func (b *Board) SetRow(rowNum int, str string) error {
 		if err != nil {
 			return err
 		}
-		b.board[rowNum][i] = num
+		b.values[row][i] = num
 	}
 	return nil
 }
 
-func (b *Board) Mark(num int) (marked bool, i, j int) {
+func (b *Board) countStepsToWinLessThanLimit(numbers []int, maxStepsLimit int) (winBeforeLimit bool, steps int) {
+	for k := 0; k < maxStepsLimit; k++ {
+		marked, i, j := b.mark(numbers[k])
+		if !marked {
+			continue
+		}
+		if b.isRowCompleted(i) || b.isColumnCompleted(j) {
+			return true, k
+		}
+	}
+	return false, 0
+}
+
+func (b *Board) countStepsToWinMoreThanLimit(numbers []int, minStepsLimit int) (winAfterLimit bool, steps int) {
+	for k := 0; k < len(numbers); k++ {
+		marked, i, j := b.mark(numbers[k])
+		if !marked {
+			continue
+		}
+		if b.isRowCompleted(i) || b.isColumnCompleted(j) {
+			return k > minStepsLimit, k
+		}
+	}
+	return true, len(numbers)
+}
+
+func (b *Board) mark(num int) (marked bool, i, j int) {
 	for i := 0; i < boardSize; i++ {
 		for j := 0; j < boardSize; j++ {
-			if b.board[i][j] == num {
+			if b.values[i][j] == num {
 				b.marked[i][j] = true
 				return true, i, j
 			}
@@ -65,33 +102,9 @@ func (b *Board) getSumOfUnmarked() int {
 	for i := 0; i < boardSize; i++ {
 		for j := 0; j < boardSize; j++ {
 			if !b.marked[i][j] {
-				sumOfUnmarked += b.board[i][j]
+				sumOfUnmarked += b.values[i][j]
 			}
 		}
 	}
 	return sumOfUnmarked
-}
-
-func splitRow(c rune) bool {
-	return c == ' '
-}
-
-func parseBoards(data []string) ([]Board, error) {
-	result := []Board{}
-
-	for i := 0; i < len(data); i++ {
-		if data[i] == "" {
-			continue
-		}
-		nextBoard := Board{}
-		for j := 0; j < boardSize; j, i = j+1, i+1 {
-			err := nextBoard.SetRow(j, data[i])
-			if err != nil {
-				return nil, err
-			}
-		}
-		result = append(result, nextBoard)
-	}
-
-	return result, nil
 }

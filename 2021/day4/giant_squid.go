@@ -27,43 +27,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("best board result", worstBoard)
-}
-
-func findWorstBoard(data []string) (int, error) {
-	numbers, err := parseNumbers(data[0])
-	if err != nil {
-		return 0, err
-	}
-	boards, err := parseBoards(data[1:])
-	if err != nil {
-		return 0, err
-	}
-
-	worstBoardIndex := 0
-	minStepsLimit := 0
-	for k := 0; k < len(boards); k++ {
-		better, steps := getStepsToFail(numbers, &boards[k], minStepsLimit)
-		if !better {
-			continue
-		}
-		worstBoardIndex = k
-		minStepsLimit = steps
-	}
-	return boards[worstBoardIndex].getSumOfUnmarked() * numbers[minStepsLimit], nil
-}
-
-func getStepsToFail(numbers []int, board *Board, minStepsLimit int) (failAfterLimit bool, steps int) {
-	for k := 0; k < len(numbers); k++ {
-		marked, i, j := board.Mark(numbers[k])
-		if !marked {
-			continue
-		}
-		if board.isRowCompleted(i) || board.isColumnCompleted(j) {
-			return k > minStepsLimit, k
-		}
-	}
-	return true, len(numbers)
+	fmt.Println("worst board result", worstBoard)
 }
 
 func findBestBoard(data []string) (int, error) {
@@ -77,29 +41,39 @@ func findBestBoard(data []string) (int, error) {
 	}
 
 	bestBoardIndex := 0
-	maxStepsLimit := len(numbers)
+	stepsLimit := len(numbers)
 	for k := 0; k < len(boards); k++ {
-		better, steps := getStepsToWin(numbers, &boards[k], maxStepsLimit)
-		if !better {
+		betterResult, newSteps := boards[k].countStepsToWinLessThanLimit(numbers, stepsLimit)
+		if !betterResult {
 			continue
 		}
 		bestBoardIndex = k
-		maxStepsLimit = steps
+		stepsLimit = newSteps
 	}
-	return boards[bestBoardIndex].getSumOfUnmarked() * numbers[maxStepsLimit], nil
+	return boards[bestBoardIndex].getSumOfUnmarked() * numbers[stepsLimit], nil
 }
 
-func getStepsToWin(numbers []int, board *Board, maxStepsLimit int) (winBeforeLimit bool, steps int) {
-	for k := 0; k < maxStepsLimit; k++ {
-		marked, i, j := board.Mark(numbers[k])
-		if !marked {
+func findWorstBoard(data []string) (int, error) {
+	numbers, err := parseNumbers(data[0])
+	if err != nil {
+		return 0, err
+	}
+	boards, err := parseBoards(data[1:])
+	if err != nil {
+		return 0, err
+	}
+
+	worstBoardIndex := 0
+	stepsLimit := 0
+	for k := 0; k < len(boards); k++ {
+		betterResult, newSteps := boards[k].countStepsToWinMoreThanLimit(numbers, stepsLimit)
+		if !betterResult {
 			continue
 		}
-		if board.isRowCompleted(i) || board.isColumnCompleted(j) {
-			return true, k
-		}
+		worstBoardIndex = k
+		stepsLimit = newSteps
 	}
-	return false, 0
+	return boards[worstBoardIndex].getSumOfUnmarked() * numbers[stepsLimit], nil
 }
 
 func parseNumbers(str string) ([]int, error) {
@@ -112,5 +86,24 @@ func parseNumbers(str string) ([]int, error) {
 		}
 		result = append(result, num)
 	}
+	return result, nil
+}
+
+func parseBoards(data []string) ([]Board, error) {
+	var result []Board
+
+	for i := 0; i < len(data); {
+		if data[i] == "" {
+			i++
+			continue
+		}
+		nextBoard, err := newBoard(data[i : i+5])
+		i += 5
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, *nextBoard)
+	}
+
 	return result, nil
 }
