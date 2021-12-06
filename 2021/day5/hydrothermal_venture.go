@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strconv"
-	"strings"
 
 	"advent-of-code/2021/file"
 )
@@ -15,75 +13,35 @@ func main() {
 		return
 	}
 
-	straightOverlapped, err := getStraightOverlappedAmount(data)
+	straightOverlaps, err := getStraightOverlaps(data)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("straight overlapped:", straightOverlapped)
+	fmt.Println("straight overlaps:", straightOverlaps)
 
-	overlapped, err := getOverlappedAmount(data)
+	allOverlaps, err := getAllOverlaps(data)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("overlapped:", overlapped)
+	fmt.Println("all overlaps:", allOverlaps)
 }
 
-// getOverlappedAmount for part2
-func getOverlappedAmount(data []string) (int, error) {
-	d := newDiagram()
+// getStraightOverlaps for part1
+func getStraightOverlaps(data []string) (int, error) {
+	plane := newPlane()
 	for _, next := range data {
-		point1, point2, err := parseRow(next)
-		if err != nil {
-			return 0, err
-		}
-		d.addLine(point1, point2)
+		plane.addStraightLine(next)
 	}
-	return d.getOverlaps(), nil
+	return plane.getOverlaps(), nil
 }
 
-// getStraightOverlappedAmount for part1
-func getStraightOverlappedAmount(data []string) (int, error) {
-	d := newDiagram()
+// getAllOverlaps for part2
+func getAllOverlaps(data []string) (int, error) {
+	plane := newPlane()
 	for _, next := range data {
-		point1, point2, err := parseRow(next)
-		if err != nil {
-			return 0, err
-		}
-		d.addStraightLine(point1, point2)
+		plane.addLine(next)
 	}
-	return d.getOverlaps(), nil
-}
-
-func parseRow(str string) (Point, Point, error) {
-	points := strings.Split(str, " -> ")
-	if len(points) != 2 {
-		return Point{}, Point{}, fmt.Errorf("cannot parse row %q", str)
-	}
-	point1, err := parsePoint(points[0])
-	if err != nil {
-		return Point{}, Point{}, fmt.Errorf("cannot parse point %q", points[0])
-	}
-	point2, err := parsePoint(points[1])
-	if err != nil {
-		return Point{}, Point{}, fmt.Errorf("cannot parse point %q", points[1])
-	}
-	return point1, point2, nil
-}
-
-func parsePoint(str string) (Point, error) {
-	nums := strings.Split(str, ",")
-	if len(nums) != 2 {
-		return Point{}, fmt.Errorf("incorrect point format %q", str)
-	}
-	x, err := strconv.Atoi(nums[0])
-	if err != nil {
-		return Point{}, fmt.Errorf("cannot parse to int %q", nums[0])
-	}
-	y, err := strconv.Atoi(nums[1])
-	if err != nil {
-		return Point{}, fmt.Errorf("cannot parse to int %q", nums[1])
-	}
-	return Point{x: x, y: y}, nil
+	return plane.getOverlaps(), nil
 }

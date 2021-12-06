@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestGetStraightOverlappedAmount(t *testing.T) {
+func TestGetStraightOverlaps(t *testing.T) {
 	tests := []struct {
 		name   string
 		input  []string
@@ -32,14 +32,14 @@ func TestGetStraightOverlappedAmount(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			result, err := getStraightOverlappedAmount(tc.input)
+			result, err := getStraightOverlaps(tc.input)
 			require.NoError(t, err)
 			require.Equal(t, tc.result, result)
 		})
 	}
 }
 
-func TestGetOverlappedAmount(t *testing.T) {
+func TestGetAllOverlaps(t *testing.T) {
 	tests := []struct {
 		name   string
 		input  []string
@@ -65,7 +65,7 @@ func TestGetOverlappedAmount(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			result, err := getOverlappedAmount(tc.input)
+			result, err := getAllOverlaps(tc.input)
 			require.NoError(t, err)
 			require.Equal(t, tc.result, result)
 		})
