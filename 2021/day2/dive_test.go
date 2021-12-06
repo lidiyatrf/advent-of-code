@@ -1,80 +1,21 @@
 package main
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-func TestMoveWithAim(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    []string
-		expected int
-	}{
-		{
-			name:     "test 1",
-			input:    []string{"forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"},
-			expected: 900,
-		},
-	}
+func TestMove(t *testing.T) {
+	input := []string{"forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"}
+	expectedResult := 150
 
-	for _, tc := range tests {
-		t.Run(strings.Join(tc.input, ", "), func(t *testing.T) {
-			result, err := moveWithAim(tc.input)
-			require.NoError(t, err)
-			require.Equal(t, tc.expected, result)
-		})
-	}
+	actualResult, err := move(input)
+	require.NoError(t, err)
+	require.Equal(t, expectedResult, actualResult)
 }
 
-func TestMove_Positive(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    []string
-		expected int
-	}{
-		{
-			name:     "test 1",
-			input:    []string{"forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"},
-			expected: 150,
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(strings.Join(tc.input, ", "), func(t *testing.T) {
-			result, err := move(tc.input)
-			require.NoError(t, err)
-			require.Equal(t, tc.expected, result)
-		})
-	}
-}
-
-func TestMove_Err(t *testing.T) {
-	tests := []struct {
-		name  string
-		input []string
-	}{
-		{
-			name:  "unsupported action",
-			input: []string{"down 5", "left 8"},
-		},
-		{
-			name:  "cannot parse amount",
-			input: []string{"forward", "down 5asd", "forward 2"},
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			_, err := move(tc.input)
-			require.Error(t, err)
-		})
-	}
-}
-
-func TestGetShift_Positive(t *testing.T) {
+func TestGetShift(t *testing.T) {
 	tests := []struct {
 		input     string
 		expectedX int
@@ -107,25 +48,11 @@ func TestGetShift_Positive(t *testing.T) {
 	}
 }
 
-func TestGetShift_Err(t *testing.T) {
-	tests := []struct {
-		input string
-	}{
-		{
-			input: "left 5",
-		},
-		{
-			input: "up aa",
-		},
-		{
-			input: "up 3aa",
-		},
-	}
+func TestMoveWithAim(t *testing.T) {
+	input := []string{"forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2"}
+	expectedResult := 900
 
-	for _, tc := range tests {
-		t.Run(tc.input, func(t *testing.T) {
-			_, _, err := getShift(tc.input)
-			require.Error(t, err)
-		})
-	}
+	actualResult, err := moveWithAim(input)
+	require.NoError(t, err)
+	require.Equal(t, expectedResult, actualResult)
 }
