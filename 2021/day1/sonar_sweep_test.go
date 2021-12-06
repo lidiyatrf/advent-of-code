@@ -6,28 +6,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestCountIncreasedTriple(t *testing.T) {
-	tests := []struct {
-		name     string
-		input    []int
-		expected int
-	}{
-		{
-			name:     "test_1",
-			input:    []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263},
-			expected: 5,
-		},
-	}
-
-	for _, tc := range tests {
-		t.Run(tc.name, func(t *testing.T) {
-			result := countIncreasedTriple(tc.input)
-			require.Equal(t, tc.expected, result)
-		})
-	}
-}
-
-func TestCountIncreasedSingle(t *testing.T) {
+func TestCountIncreasedSingles(t *testing.T) {
 	tests := []struct {
 		name     string
 		input    []int
@@ -52,8 +31,16 @@ func TestCountIncreasedSingle(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			result := countIncreasedSingle(tc.input)
+			result := countIncreasedSingles(tc.input)
 			require.Equal(t, tc.expected, result)
 		})
 	}
+}
+
+func TestCountIncreasedTriples(t *testing.T) {
+	input := []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263}
+	expectedResult := 5
+
+	actualResult := countIncreasedTriples(input)
+	require.Equal(t, expectedResult, actualResult)
 }
