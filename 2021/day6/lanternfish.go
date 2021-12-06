@@ -13,12 +13,19 @@ func main() {
 		return
 	}
 
-	lanternfish, err := countLanternfish(data[0], 80)
+	lanternfish80, err := countLanternfish(data[0], 80)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("lanternfish:", lanternfish)
+	fmt.Println("lanternfish after 80 days:", lanternfish80)
+
+	lanternfish256, err := countLanternfish(data[0], 256)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("lanternfish after 256 days:", lanternfish256)
 }
 
 func countLanternfish(data string, days int) (int, error) {
