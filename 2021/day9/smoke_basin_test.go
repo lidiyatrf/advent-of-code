@@ -1,8 +1,9 @@
 package main
 
 import (
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestSumLowPoints(t *testing.T) {
@@ -43,4 +44,21 @@ func TestSumLowPoints(t *testing.T) {
 			require.Equal(t, tc.result, result)
 		})
 	}
+}
+
+func TestMultLargestBasins(t *testing.T) {
+	input :=
+		[]string{
+			"2199943210",
+			"3987894921",
+			"9856789892",
+			"8767896789",
+			"9899965678",
+		}
+	expectedResult := 1134
+
+	actualResult, err := multLargestBasins(input)
+	require.NoError(t, err)
+	require.Equal(t, expectedResult, actualResult)
+
 }

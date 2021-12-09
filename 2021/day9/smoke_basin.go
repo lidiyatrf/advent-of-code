@@ -1,8 +1,9 @@
 package main
 
 import (
-	"advent-of-code/2021/file"
 	"fmt"
+
+	"advent-of-code/2021/file"
 )
 
 func main() {
@@ -18,6 +19,13 @@ func main() {
 		return
 	}
 	fmt.Println("sum:", sum)
+
+	mult, err := multLargestBasins(data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("mult of 3 largest bassins:", mult)
 }
 
 func sumRiskedLevel(data []string) (int, error) {
@@ -35,4 +43,22 @@ func sumRiskedLevel(data []string) (int, error) {
 	}
 
 	return hm.sumRiskedLevel(), nil
+}
+
+func multLargestBasins(data []string) (int, error) {
+	hm, err := newHeightmap(data)
+	if err != nil {
+		return 0, nil
+	}
+
+	for i := 0; i < hm.getHeight(); i++ {
+		for j := 0; j < hm.getWidth(); j++ {
+			if hm.isSmallerThanAround(i, j) {
+				hm.markLowest(i, j)
+			}
+		}
+	}
+
+	sizes := hm.get3LargestBasins()
+	return sizes[0] * sizes[1] * sizes[2], nil
 }
