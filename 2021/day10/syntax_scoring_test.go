@@ -67,3 +67,23 @@ func TestCalcScoreForSyntaxErrors(t *testing.T) {
 	actualResult := calcScoreForSyntaxErrors(input)
 	assert.Equal(t, expectedResult, actualResult)
 }
+
+func TestCalcScoreForIncompleteRows(t *testing.T) {
+	input :=
+		[]string{
+			"[({(<(())[]>[[{[]{<()<>>",
+			"[(()[<>])]({[<{<<[]>>(",
+			"{([(<{}[<>[]}>{[]{[(<()>",
+			"(((({<>}<{<{<>}{[]{[]{}",
+			"[[<[([]))<([[{}[[()]]]",
+			"[{[{({}]{}}([{[{{{}}([]",
+			"{<[[]]>}<{[{[{[]{()[[[]",
+			"[<(<(<(<{}))><([]([]()",
+			"<{([([[(<>()){}]>(<<{{",
+			"<{([{{}}[<[[[<>{}]]]>[]]",
+		}
+	expectedResult := 288957
+
+	actualResult := calcScoreForIncompleteRows(input)
+	assert.Equal(t, expectedResult, actualResult)
+}
