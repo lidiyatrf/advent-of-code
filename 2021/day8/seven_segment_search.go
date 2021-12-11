@@ -14,7 +14,14 @@ func main() {
 		return
 	}
 
-	sum, err := count1478digits(data)
+	amountOf1478, err := count1478digits(data)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("amount of digits 1 4 7 8:", amountOf1478)
+
+	sum, err := sumOutputValues(data)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -37,4 +44,27 @@ func count1478digits(data []string) (int, error) {
 		}
 	}
 	return counter, nil
+}
+
+func sumOutputValues(data []string) (int, error) {
+	sum := 0
+	for _, nextLine := range data {
+		splitted := strings.Split(nextLine, " | ")
+		if len(splitted) != 2 {
+			return 0, fmt.Errorf("error when splitting by |")
+		}
+
+		signalWires := strings.Split(splitted[0], " ")
+		if len(signalWires) != 10 {
+			return 0, fmt.Errorf("error when splitting first part")
+		}
+		d := newDisplay(signalWires)
+
+		secondPartSplitted := strings.Split(splitted[1], " ")
+		if len(secondPartSplitted) != 4 {
+			return 0, fmt.Errorf("error when splitting second part")
+		}
+		sum += d.decodeOutputValue(secondPartSplitted)
+	}
+	return sum, nil
 }
