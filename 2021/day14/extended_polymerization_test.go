@@ -11,7 +11,7 @@ func TestGetDiffMostAndLeastCommon(t *testing.T) {
 		name   string
 		input  []string
 		steps  int
-		result int
+		result int64
 	}{
 		{
 			name: "test 0",
@@ -37,6 +37,31 @@ func TestGetDiffMostAndLeastCommon(t *testing.T) {
 			},
 			steps:  10,
 			result: 1588,
+		},
+		{
+			name: "test 1",
+			input: []string{
+				"NNCB",
+				"",
+				"CH -> B",
+				"HH -> N",
+				"CB -> H",
+				"NH -> C",
+				"HB -> C",
+				"HC -> B",
+				"HN -> C",
+				"NN -> C",
+				"BH -> H",
+				"NC -> B",
+				"NB -> B",
+				"BN -> B",
+				"BB -> N",
+				"BC -> B",
+				"CC -> N",
+				"CN -> C",
+			},
+			steps:  40,
+			result: 2188189693529,
 		},
 	}
 

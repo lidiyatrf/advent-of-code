@@ -1,10 +1,13 @@
 package main
 
-import "strings"
+import (
+	"math"
+	"strings"
+)
 
 type Polymer struct {
-	polymer string
-	rules   map[string]string
+	polymerPairs map[string]int64
+	rules        map[string]string
 }
 
 func newPolymer(polymer string, rulesArr []string) *Polymer {
@@ -16,52 +19,59 @@ func newPolymer(polymer string, rulesArr []string) *Polymer {
 		}
 		rules[splitted[0]] = splitted[1]
 	}
+
+	polymerPairs := make(map[string]int64)
+
+	for i := 0; i < len(polymer)-1; i++ {
+		pair := polymer[i : i+2]
+		polymerPairs[pair]++
+	}
+	polymerPairs[polymer[len(polymer)-1:]]++
+
 	return &Polymer{
-		polymer: polymer,
-		rules:   rules,
+		polymerPairs: polymerPairs,
+		rules:        rules,
 	}
 }
 
 func (p *Polymer) polymerize() {
-	var result strings.Builder
-	result.WriteString(p.polymer[0:1])
-
-	for i := 1; i < len(p.polymer); i++ {
-		pair := p.polymer[i-1 : i+1]
-		additionalLetter := p.rules[pair]
-		result.WriteString(additionalLetter)
-		result.WriteString(p.polymer[i : i+1])
+	newPairs := make(map[string]int64)
+	for k, v := range p.polymerPairs {
+		if len(k) == 1 {
+			newPairs[k]++
+			continue
+		}
+		additionalLetter := p.rules[k]
+		first := k[0:1] + additionalLetter
+		second := additionalLetter + k[1:2]
+		newPairs[first] += v
+		newPairs[second] += v
 	}
-
-	p.polymer = result.String()
+	p.polymerPairs = newPairs
 }
 
-func (p *Polymer) getMostCommonBitOccurrence() int {
-	maxAmount := 0
-	counter := make(map[rune]int)
-	for _, next := range p.polymer {
-		counter[next]++
-		if counter[next] > maxAmount {
-			maxAmount = counter[next]
+func (p *Polymer) getCommonBitsOccurrence() (max, min int64) {
+	letterMap := make(map[string]int64)
+	for k, v := range p.polymerPairs {
+		letterMap[k[:1]] += v
+	}
+
+	max, min = 0, math.MaxInt
+	for _, v := range letterMap {
+		if v > max {
+			max = v
+		}
+		if v < min {
+			min = v
 		}
 	}
-	return maxAmount
+	return max, min
 }
 
-func (p *Polymer) getLeastCommonBitOccurrence() int {
-	minAmount := 1
-	minRune := []rune(p.polymer)[0]
-
-	counter := make(map[rune]int)
-	for _, next := range p.polymer[1:] {
-		counter[next]++
-		if next == minRune {
-			minAmount = counter[next]
-		}
-		if counter[next] < counter[minRune] {
-			minAmount = counter[next]
-			minRune = next
-		}
+func (p *Polymer) getPolymerLength() int64 {
+	counter := int64(0)
+	for _, v := range p.polymerPairs {
+		counter += v
 	}
-	return minAmount
+	return counter
 }
