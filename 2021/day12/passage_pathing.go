@@ -1,8 +1,9 @@
 package main
 
 import (
-	"advent-of-code/2021/file"
 	"fmt"
+
+	"advent-of-code/2021/file"
 )
 
 func main() {
@@ -12,11 +13,19 @@ func main() {
 		return
 	}
 
-	paths := getPathsCount(data)
-	fmt.Println("paths:", paths)
+	paths1 := getPathsCountPart1(data)
+	fmt.Println("paths1:", paths1)
+
+	paths2 := getPathsCountPart2(data)
+	fmt.Println("paths2:", paths2)
 }
 
-func getPathsCount(data []string) int {
+func getPathsCountPart1(data []string) int {
 	g := newGraph(data)
-	return g.getDistinctPathsAmount()
+	return g.getDistinctPathsAmountPart1()
+}
+
+func getPathsCountPart2(data []string) int {
+	g := newGraph(data)
+	return g.getDistinctPathsAmountPart2()
 }

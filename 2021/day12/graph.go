@@ -24,33 +24,33 @@ func newGraph(data []string) *Graph {
 	return g
 }
 
-func (g *Graph) getDistinctPathsAmount() int {
-	paths := g.findAllPaths("start", make(map[string]struct{}))
+func (g *Graph) getDistinctPathsAmountPart1() int {
+	paths := g.findAllPaths(start, make(map[string]struct{}))
 	return len(paths)
 }
 
-func (g *Graph) findAllPaths(current string, visited map[string]struct{}) []string {
+func (g *Graph) findAllPaths(currVertex string, visited map[string]struct{}) []string {
 	var pathsFromCurrent []string
-	for _, next := range g.vertexes[current] {
-		if next == "start" {
+	for _, nextVertex := range g.vertexes[currVertex] {
+		if nextVertex == start {
 			continue
 		}
-		if next == "end" {
-			pathsFromCurrent = append(pathsFromCurrent, "end")
+		if nextVertex == end {
+			pathsFromCurrent = append(pathsFromCurrent, end)
 			continue
 		}
-		if _, exists := visited[next]; exists {
+		if _, exists := visited[nextVertex]; exists {
 			continue
 		}
 
-		if isCaveSmall(next) {
-			visited[next] = struct{}{}
+		if isCaveSmall(nextVertex) {
+			visited[nextVertex] = struct{}{}
 		}
-		pathsFromNext := g.findAllPaths(next, visited)
-		delete(visited, next)
+		pathsFromNext := g.findAllPaths(nextVertex, visited)
+		delete(visited, nextVertex)
 
 		for _, fromNext := range pathsFromNext {
-			pathsFromCurrent = append(pathsFromCurrent, strings.Join([]string{next, fromNext}, ","))
+			pathsFromCurrent = append(pathsFromCurrent, strings.Join([]string{nextVertex, fromNext}, ","))
 		}
 	}
 	return pathsFromCurrent
@@ -63,4 +63,45 @@ func isCaveSmall(str string) bool {
 		}
 	}
 	return true
+}
+
+func (g *Graph) getDistinctPathsAmountPart2() int {
+	paths := g.findAllPathsPart2(start, make(map[string]struct{}), make(map[string]struct{}))
+	return len(paths)
+}
+
+func (g *Graph) findAllPathsPart2(currVertex string, visited map[string]struct{}, visitedTwice map[string]struct{}) []string {
+	var pathsFromCurrent []string
+
+	for _, nextVertex := range g.vertexes[currVertex] {
+		if nextVertex == start {
+			continue
+		}
+		if nextVertex == end {
+			pathsFromCurrent = append(pathsFromCurrent, end)
+			continue
+		}
+
+		if _, exists := visited[nextVertex]; exists {
+			if len(visitedTwice) == 1 {
+				continue
+			}
+			visitedTwice[nextVertex] = struct{}{}
+		} else if isCaveSmall(nextVertex) {
+			visited[nextVertex] = struct{}{}
+		}
+
+		pathsFromNext := g.findAllPathsPart2(nextVertex, visited, visitedTwice)
+
+		if _, exists := visitedTwice[nextVertex]; exists {
+			delete(visitedTwice, nextVertex)
+		} else {
+			delete(visited, nextVertex)
+		}
+
+		for _, fromNext := range pathsFromNext {
+			pathsFromCurrent = append(pathsFromCurrent, strings.Join([]string{nextVertex, fromNext}, ","))
+		}
+	}
+	return pathsFromCurrent
 }
