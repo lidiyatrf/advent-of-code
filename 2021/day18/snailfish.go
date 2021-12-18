@@ -15,6 +15,25 @@ func main() {
 
 	magnitude := getMagnitudeOfSum(data)
 	fmt.Println("magnitude", magnitude)
+
+	largestMagnitude := getLargestMagnitudeOfSum(data)
+	fmt.Println("largestMagnitude", largestMagnitude)
+}
+
+func getLargestMagnitudeOfSum(data []string) interface{} {
+	var largestMagnitude int
+	for i, first := range data {
+		for j, second := range data {
+			if i == j {
+				continue
+			}
+			currentMagnitude := getMagnitudeOfSum([]string{first, second})
+			if currentMagnitude > largestMagnitude {
+				largestMagnitude = currentMagnitude
+			}
+		}
+	}
+	return largestMagnitude
 }
 
 func getMagnitudeOfSum(data []string) int {
