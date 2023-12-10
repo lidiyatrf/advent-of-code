@@ -1,10 +1,9 @@
 package main
 
 import (
+	"advent-of-code/file"
 	"fmt"
 	"strings"
-
-	"advent-of-code/2021/file"
 )
 
 func main() {

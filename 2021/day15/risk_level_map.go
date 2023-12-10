@@ -1,7 +1,7 @@
 package main
 
 import (
-	"advent-of-code/2021/parse"
+	"advent-of-code/parse"
 )
 
 type Point struct {

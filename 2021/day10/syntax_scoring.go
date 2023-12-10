@@ -1,10 +1,9 @@
 package main
 
 import (
+	"advent-of-code/file"
 	"fmt"
 	"sort"
-
-	"advent-of-code/2021/file"
 )
 
 var openClosePairs = map[rune]rune{

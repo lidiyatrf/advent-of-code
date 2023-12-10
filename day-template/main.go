@@ -1,12 +1,12 @@
 package main
 
 import (
-	"advent-of-code/2021/file"
+	"advent-of-code/file"
 	"fmt"
 )
 
 func main() {
-	data, err := file.ParseToStrings("2022/day/input.txt")
+	data, err := file.ParseToStrings("202*/day-template/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return

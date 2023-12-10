@@ -1,7 +1,7 @@
 package main
 
 import (
-	"advent-of-code/2021/file"
+	"advent-of-code/file"
 	"fmt"
 	"strings"
 )

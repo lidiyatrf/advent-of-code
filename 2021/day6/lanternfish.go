@@ -1,9 +1,8 @@
 package main
 
 import (
+	"advent-of-code/file"
 	"fmt"
-
-	"advent-of-code/2021/file"
 )
 
 func main() {

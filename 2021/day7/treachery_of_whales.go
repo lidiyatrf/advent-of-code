@@ -1,12 +1,11 @@
 package main
 
 import (
+	"advent-of-code/file"
+	"advent-of-code/parse"
 	"fmt"
 	"math"
 	"sort"
-
-	"advent-of-code/2021/file"
-	"advent-of-code/2021/parse"
 )
 
 func main() {
