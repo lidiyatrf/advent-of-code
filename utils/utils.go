@@ -12,3 +12,17 @@ func GetMin(array []int) int {
 	}
 	return minimum
 }
+
+func Min(number1, number2 int) int {
+	if number1 < number2 {
+		return number1
+	}
+	return number2
+}
+
+func Abs(value int) int {
+	if value >= 0 {
+		return value
+	}
+	return value * -1
+}

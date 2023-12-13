@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPuzzle1(t *testing.T) {
@@ -33,7 +33,7 @@ func TestPuzzle1(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			result := puzzle1(tc.input)
-			require.Equal(t, tc.expected, result)
+			assert.Equal(t, tc.expected, result)
 		})
 	}
 }
