@@ -15,12 +15,12 @@ func TestPuzzle1(t *testing.T) {
 		{
 			name: "test_1",
 			input: []string{
-				"#.#.### 1,1,3",
-				".#...#....###. 1,1,3",
-				".#.###.#.###### 1,3,1,6",
-				"####.#...#... 4,1,1",
-				"#....######..#####. 1,6,5",
-				".###.##....# 3,2,1",
+				"???.### 1,1,3",
+				".??..??...?##. 1,1,3",
+				"?#?#?#?#?#?#?#? 1,3,1,6",
+				"????.#...#... 4,1,1",
+				"????.######..#####. 1,6,5",
+				"?###???????? 3,2,1",
 			},
 			expected: 21,
 		},
@@ -29,6 +29,34 @@ func TestPuzzle1(t *testing.T) {
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
 			result := puzzle1(tc.input)
+			assert.Equal(t, tc.expected, result)
+		})
+	}
+}
+
+func TestPuzzle2(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    []string
+		expected int
+	}{
+		{
+			name: "test_1",
+			input: []string{
+				"???.### 1,1,3",
+				".??..??...?##. 1,1,3",
+				"?#?#?#?#?#?#?#? 1,3,1,6",
+				"????.#...#... 4,1,1",
+				"????.######..#####. 1,6,5",
+				"?###???????? 3,2,1",
+			},
+			expected: 525152,
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			result := puzzle2(tc.input)
 			assert.Equal(t, tc.expected, result)
 		})
 	}

@@ -20,7 +20,14 @@ func Min(number1, number2 int) int {
 	return number2
 }
 
-func Abs(value int64) int64 {
+func AbsInt64(value int64) int64 {
+	if value >= 0 {
+		return value
+	}
+	return value * -1
+}
+
+func Abs(value int) int {
 	if value >= 0 {
 		return value
 	}

@@ -67,7 +67,7 @@ func puzzle(lines []string, replacementForEmptyRowsAndColumns int64) int64 {
 	for i := 0; i < len(galaxies)-1; i++ {
 		firstGalaxy := galaxies[i]
 		for _, secondGalaxy := range galaxies[i+1:] {
-			res += utils.Abs(secondGalaxy.column-firstGalaxy.column) + utils.Abs(secondGalaxy.row-firstGalaxy.row)
+			res += utils.AbsInt64(secondGalaxy.column-firstGalaxy.column) + utils.AbsInt64(secondGalaxy.row-firstGalaxy.row)
 		}
 	}
 

@@ -13,13 +13,15 @@ func main() {
 	}
 
 	fmt.Println("puzzle 1:", puzzle1(data))
+	//fmt.Println("puzzle 2:", puzzle2(data))
 }
 
-func puzzle1(arr []string) int {
+func puzzle1(lines []string) int {
 	var res int
 
-	for _, line := range arr {
+	for _, line := range lines {
 		res += len(line)
+
 	}
 
 	return res
