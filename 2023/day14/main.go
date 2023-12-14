@@ -4,6 +4,7 @@ import (
 	"advent-of-code/file"
 	"fmt"
 	"runtime"
+	"strings"
 	"sync"
 )
 
@@ -44,15 +45,32 @@ func puzzle1(lines []string) int {
 func puzzle2(lines []string) int {
 	fmt.Println(runtime.NumCPU())
 	dish := stringsToRune(lines)
+	boardToIndex := map[string]int{}
+	indexToNum := map[int]int{}
+	diff := 1000000000
+	lastNum := -1
 	for i := 0; i < 1000000000; i++ {
-		//t := time.Now()
+		num, ok := indexToNum[i%diff]
+		if ok {
+			lastNum = num
+			continue
+		}
 		dish = oneCycle(dish)
-		//fmt.Println(i, time.Since(t))
+		if i < 150000 {
+			continue
+		}
+
+		n := calcBoard(dish)
+		dishStr := strings.Join(runeToStrings(dish), "")
+		pos, ok := boardToIndex[dishStr]
+		if ok {
+			diff = i - pos
+			indexToNum[pos%diff] = n
+		}
+		boardToIndex[dishStr] = i
+		fmt.Println(i, n, diff)
 	}
-	for i := 0; i < len(dish); i++ {
-		fmt.Println(string(dish[i]))
-	}
-	return calcBoard(dish)
+	return lastNum
 }
 
 func calcBoard(dish [][]rune) int {
