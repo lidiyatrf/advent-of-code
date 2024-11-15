@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	data, err := file.ParseToStrings("2021/day8/input.txt")
+	data, err := file.ToStrings("2021/day8/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return

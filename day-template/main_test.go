@@ -15,7 +15,7 @@ func TestPuzzle1(t *testing.T) {
 		{
 			name:     "test_1",
 			input:    []string{},
-			expected: 24000,
+			expected: 0,
 		},
 	}
 

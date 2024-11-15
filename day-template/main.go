@@ -1,15 +1,16 @@
 package main
 
 import (
-	"advent-of-code/file"
 	"fmt"
+	"log"
+
+	"advent-of-code/file"
 )
 
 func main() {
-	data, err := file.ParseToStrings("202*/day*/input.txt")
+	data, err := file.ToStrings("./input.txt")
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatalf("cannot read file: %v", err)
 	}
 
 	fmt.Println("puzzle 1:", puzzle1(data))

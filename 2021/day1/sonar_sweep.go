@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	data, err := file.ParseToInts("2021/day1/input.txt")
+	data, err := file.ToInts("2021/day1/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return

@@ -2,13 +2,13 @@ package main
 
 import (
 	"advent-of-code/file"
-	"advent-of-code/utils"
+	math1 "advent-of-code/utils"
 	"fmt"
 	"math"
 )
 
 func main() {
-	data, err := file.ParseToStrings("2023/day13/input.txt")
+	data, err := file.ToStrings("./input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -50,7 +50,7 @@ func findHorizontalMirror(lines []string) (int, bool) {
 			continue
 		}
 
-		rowsToCheck := utils.Min(row+1, len(lines)-row-1)
+		rowsToCheck := math1.Min(row+1, len(lines)-row-1)
 
 		mirror := true
 
@@ -88,7 +88,7 @@ func findVerticalMirror(lines []string) (int, bool) {
 			continue
 		}
 
-		columnsToCheck := utils.Min(col+1, len(lines[0])-col-1)
+		columnsToCheck := math1.Min(col+1, len(lines[0])-col-1)
 
 		for i := 0; i < columnsToCheck; i++ {
 			leftColumn := col - i
@@ -159,7 +159,7 @@ func findHorizontalMirror2(lines []string) (int, bool) {
 			continue
 		}
 
-		rowsToCheck := utils.Min(row+1, len(nums)-row-1)
+		rowsToCheck := math1.Min(row+1, len(nums)-row-1)
 
 		mirror := true
 		smudge := false
@@ -215,7 +215,7 @@ func findVerticalMirror2(lines []string) (int, bool) {
 			continue
 		}
 
-		rowsToCheck := utils.Min(row+1, len(nums)-row-1)
+		rowsToCheck := math1.Min(row+1, len(nums)-row-1)
 
 		mirror := true
 		smudge := false

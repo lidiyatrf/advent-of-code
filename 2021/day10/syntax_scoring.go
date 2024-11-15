@@ -14,7 +14,7 @@ var openClosePairs = map[rune]rune{
 }
 
 func main() {
-	data, err := file.ParseToStrings("2021/day10/input.txt")
+	data, err := file.ToStrings("2021/day10/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
