@@ -1,15 +1,16 @@
 package main
 
 import (
-	"advent-of-code/file"
-	"advent-of-code/utils"
 	"fmt"
 	"strconv"
 	"strings"
+
+	"advent-of-code/file"
+	"advent-of-code/utils"
 )
 
 func main() {
-	data, err := file.ParseToStrings("2023/day18/input.txt")
+	data, err := file.ToStrings("2023/day18/input.txt")
 	if err != nil {
 		fmt.Println(err)
 		return
