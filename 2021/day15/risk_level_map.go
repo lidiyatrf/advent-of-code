@@ -1,8 +1,6 @@
 package main
 
-import (
-	"advent-of-code/parse"
-)
+import "advent-of-code/split"
 
 type Point struct {
 	i int
@@ -17,7 +15,7 @@ func newMatrix(lines []string) *RiskLevelMap {
 	var matrix [][]int
 
 	for _, line := range lines {
-		ints, err := parse.StringToInts(line, "")
+		ints, err := split.ToInts(line, "")
 		if err != nil {
 			panic(err)
 		}

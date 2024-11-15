@@ -10,7 +10,7 @@ func TestPuzzle1(t *testing.T) {
 	tests := []struct {
 		name     string
 		input    []string
-		expected int
+		expected int64
 	}{
 		{
 			name: "test_1",
@@ -43,7 +43,7 @@ func TestPuzzle2(t *testing.T) {
 		name                              string
 		input                             []string
 		replacementForEmptyRowsAndColumns int64
-		expected                          int
+		expected                          int64
 	}{
 		{
 			name: "test_10",

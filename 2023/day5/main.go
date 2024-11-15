@@ -2,7 +2,7 @@ package main
 
 import (
 	"advent-of-code/file"
-	"advent-of-code/parse"
+	"advent-of-code/split"
 	"advent-of-code/utils"
 	"fmt"
 )
@@ -19,7 +19,7 @@ func main() {
 }
 
 func puzzle2(lines []string) int {
-	seedsFromFile, _ := parse.StringToInts(lines[0][7:], " ")
+	seedsFromFile, _ := split.ToInts(lines[0][7:], " ")
 	sourceArray := fromPairsToSourceRanges(seedsFromFile)
 
 	for i := 3; i < len(lines); {
@@ -110,14 +110,14 @@ func applyRule(source sourceRange, rule rule) (sourceRange, []sourceRange, bool)
 func fromMappingLinesToDestinationRangeMapping(mappingLines []string) []rule {
 	var newArr []rule
 	for _, line := range mappingLines {
-		mapLine, _ := parse.StringToInts(line, " ")
+		mapLine, _ := split.ToInts(line, " ")
 		newArr = append(newArr, rule{mapLine[1], mapLine[1] + mapLine[2] - 1, mapLine[0] - mapLine[1]})
 	}
 	return newArr
 }
 
 func puzzle1(lines []string) int {
-	sourceArray, _ := parse.StringToInts(lines[0][7:], " ")
+	sourceArray, _ := split.ToInts(lines[0][7:], " ")
 
 	for i := 3; i < len(lines); {
 		mappingsLastLine := i
@@ -138,7 +138,7 @@ func mapArray(arraySource []int, mappingLines []string) []int {
 	var newSource []int
 
 	for _, line := range mappingLines {
-		mapLine, _ := parse.StringToInts(line, " ")
+		mapLine, _ := split.ToInts(line, " ")
 
 		destinationMin := mapLine[1]
 		destinationMax := mapLine[1] + mapLine[2]

@@ -1,11 +1,12 @@
 package main
 
 import (
-	"advent-of-code/file"
-	"advent-of-code/parse"
 	"fmt"
 	"math"
 	"sort"
+
+	"advent-of-code/file"
+	"advent-of-code/split"
 )
 
 func main() {
@@ -32,7 +33,7 @@ func main() {
 }
 
 func countFuelToAlignCrabs1(data string) (fuel int, err error) {
-	positions, err := parse.StringToInts(data, ",")
+	positions, err := split.ToInts(data, ",")
 	if err != nil {
 		return 0, err
 	}
@@ -60,7 +61,7 @@ func calculateCost1(positions []int, position int) int {
 }
 
 func countFuelToAlignCrabs2(data string) (fuel int, err error) {
-	positions, err := parse.StringToInts(data, ",")
+	positions, err := split.ToInts(data, ",")
 	if err != nil {
 		return 0, err
 	}

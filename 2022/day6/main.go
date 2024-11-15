@@ -37,7 +37,7 @@ func puzzle(line string, distictSymbols int) int {
 
 		if len(symbolsMap) == distictSymbols {
 			return currentStartPosition + distictSymbols
-		} // mjqjp qmgbljsphdztnv jfqwrcgsmlb
+		}
 	}
 
 	return -1
