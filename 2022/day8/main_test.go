@@ -1,12 +1,13 @@
 package main
 
 import (
-	"advent-of-code/file/reader"
 	"io"
 	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/require"
+
+	"advent-of-code/file/reader"
 )
 
 func TestPuzzle1(t *testing.T) {
@@ -17,10 +18,38 @@ func TestPuzzle1(t *testing.T) {
 	}{
 		{
 			name: "test_1",
+			input: strings.NewReader(`30373
+25512
+65332
+33549
+35390`),
+			expected: 21,
+		},
+		{
+			name: "test_2",
 			input: strings.NewReader(
-				`111
-222`),
-			expected: 6,
+				`303
+625
+653`),
+			expected: 9,
+		},
+		{
+			name: "test_3",
+			input: strings.NewReader(
+				`9999999999999999
+1234555566667890
+1246890999998873
+9999999999999999`),
+			expected: 36 + 16,
+		},
+		{
+			name: "test_4",
+			input: strings.NewReader(
+				`92345555666
+92463941239
+92468909999
+99999999999`),
+			expected: 26 + 7,
 		},
 	}
 
